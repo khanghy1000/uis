@@ -4,12 +4,14 @@ import { Homepage } from './Homepage';
 
 const app = new Hono();
 
-const loginUrl = 'https://uis.ptithcm.edu.vn/api/auth/login';
+const baseUrl = 'https://uis.ptithcm.edu.vn';
+const loginUrl = baseUrl + '/api/auth/login';
 const getDsDiemUrl =
-    'https://uis.ptithcm.edu.vn/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
+    baseUrl + '/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
+const svInfoUrl = baseUrl + '/api/dkmh/w-locsinhvieninfo';
 
 app.get('/', (c) => {
-    return c.html(<Homepage error={null}/>);
+    return c.html(<Homepage error={null} />);
 });
 
 app.post('/diem', async (c) => {
@@ -30,6 +32,19 @@ app.post('/diem', async (c) => {
         const loginData: any = await loginRes.json();
         const token = loginData.access_token;
 
+        const svInfoRes = await fetch(svInfoUrl, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!svInfoRes.ok) {
+            throw new Error('Get sv info failed');
+        }
+
+        const svInfoData: any = await svInfoRes.json();
+
         const dsDiemRes = await fetch(getDsDiemUrl, {
             method: 'POST',
             headers: {
@@ -42,7 +57,12 @@ app.post('/diem', async (c) => {
         }
 
         const dsDiemData: any = await dsDiemRes.json();
-        return c.html(<Result dsDiemHocKy={dsDiemData.data.ds_diem_hocky} />);
+        return c.html(
+            <Result
+                svInfo={svInfoData.data}
+                dsDiemHocKy={dsDiemData.data.ds_diem_hocky}
+            />
+        );
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);

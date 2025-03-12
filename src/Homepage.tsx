@@ -22,7 +22,7 @@ export const Homepage = ({ error }: { error: any }) => {
                             name="password"
                             placeholder="Password"
                         />
-                        <button type="submit">Submit</button>
+                        <button type="submit">Đăng nhập</button>
                     </form>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                 </div>

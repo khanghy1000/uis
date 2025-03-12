@@ -1,4 +1,10 @@
-export const Result = ({ dsDiemHocKy }: { dsDiemHocKy: any }) => {
+export const Result = ({
+    dsDiemHocKy,
+    svInfo,
+}: {
+    dsDiemHocKy: any;
+    svInfo: any;
+}) => {
     return (
         <html>
             <head>
@@ -17,6 +23,9 @@ export const Result = ({ dsDiemHocKy }: { dsDiemHocKy: any }) => {
                 </style>
             </head>
             <body>
+                <h3>Họ tên: {svInfo.ten_day_du}</h3>
+                <h3>MSSV: {svInfo.ma_sv}</h3>
+                <hr />
                 {dsDiemHocKy.map((hocKy: any) => (
                     <>
                         <h2>{hocKy.ten_hoc_ky}</h2>
