@@ -1,4 +1,4 @@
-export const Homepage = () => {
+export const Homepage = ({error}: {error: any}) => {
     return (
         <div>
             <form action="/diem" method="post">
@@ -6,6 +6,7 @@ export const Homepage = () => {
                 <input type="password" name="password" placeholder="Password" />
                 <button type="submit">Submit</button>
             </form>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 };

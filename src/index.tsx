@@ -9,7 +9,7 @@ const getDsDiemUrl =
     'https://uis.ptithcm.edu.vn/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
 
 app.get('/', (c) => {
-    return c.html(<Homepage />);
+    return c.html(<Homepage error={null}/>);
 });
 
 app.post('/diem', async (c) => {
@@ -44,7 +44,10 @@ app.post('/diem', async (c) => {
         const dsDiemData: any = await dsDiemRes.json();
         return c.html(<Result dsDiemHocKy={dsDiemData.data.ds_diem_hocky} />);
     } catch (error) {
-        return c.text('Error: ' + error, 400);
+        if (error instanceof Error) {
+            console.error(error.message);
+            return c.html(<Homepage error={error.message} />);
+        }
     }
 });
 
