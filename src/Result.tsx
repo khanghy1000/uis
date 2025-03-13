@@ -65,7 +65,36 @@ function MonHocRow(monHoc: any) {
             <td>{monHoc.diem_tk_so ?? ''}</td>
             <td>{monHoc.diem_tk_chu ?? ''}</td>
             <td>{monHoc.ket_qua ? 'Đạt' : 'Không đạt'}</td>
-            <td>{DiemThanhPhanTable(monHoc)}</td>
+            <td style={{ textAlign: 'center' }}>
+                {monHoc.ds_diem_thanh_phan &&
+                    monHoc.ds_diem_thanh_phan.length > 0 && (
+                        <>
+                            <dialog id={monHoc.ma_mon}>
+                                <h3>
+                                    {monHoc.ma_mon} - {monHoc.ten_mon}
+                                </h3>
+                                {DiemThanhPhanTable(monHoc)}
+                                <button
+                                    style={{ marginTop: '20px' }}
+                                    onclick={`document.getElementById('${monHoc.ma_mon}').close()`}
+                                >
+                                    Đóng
+                                </button>
+                            </dialog>
+                            <button
+                                style={{
+                                    fontWeight: 'bold',
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                }}
+                                onclick={`document.getElementById('${monHoc.ma_mon}').showModal()`}
+                            >
+                                Chi tiết
+                            </button>
+                        </>
+                    )}
+            </td>
         </tr>
     );
 }
@@ -74,9 +103,9 @@ function DiemThanhPhanTable(monHoc: any) {
     if (!monHoc.ds_diem_thanh_phan || monHoc.ds_diem_thanh_phan.length === 0) {
         return null;
     }
-    
+
     return (
-        <table border={1}>
+        <table border={1} style={{ width: '100%' }}>
             <thead>
                 <tr>
                     <th>Thành phần</th>
