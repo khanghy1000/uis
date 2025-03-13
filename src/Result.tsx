@@ -46,6 +46,7 @@ export const Result = ({
                                 MonHocRow(monHoc)
                             )}
                         </table>
+                        <DiemTB hocKy={hocKy} />
                     </>
                 ))}
             </body>
@@ -122,6 +123,27 @@ function DiemThanhPhanTable(monHoc: any) {
                     </tr>
                 ))}
             </tbody>
+        </table>
+    );
+}
+
+function DiemTB({ hocKy }: { hocKy: any }) {
+    return (
+        <table border={1} style={{ marginTop: '20px', marginBottom: '20px' }}>
+            <tr>
+                <td>ĐTB học kỳ hệ 10: {hocKy.dtb_hk_he10}</td>
+                <td>ĐTB tích luỹ hệ 10: {hocKy.dtb_tich_luy_he_10}</td>
+            </tr>
+            <tr>
+                <td>ĐTB học kỳ hệ 4: {hocKy.dtb_hk_he4}</td>
+                <td>ĐTB tích luỹ hệ 4: {hocKy.dtb_tich_luy_he_4}</td>
+            </tr>
+            <tr>
+                <td>Số tín chỉ đạt HK: {hocKy.so_tin_chi_dat_hk}</td>
+                <td>
+                    Số tín chỉ đạt tích luỹ: {hocKy.so_tin_chi_dat_tich_luy}
+                </td>
+            </tr>
         </table>
     );
 }
