@@ -11,7 +11,8 @@ const getDsDiemUrl =
 const svInfoUrl = baseUrl + '/api/dkmh/w-locsinhvieninfo';
 
 app.get('/', (c) => {
-    return c.html(<Homepage error={null} />);
+    const error = c.req.query('error');
+    return c.html(<Homepage error={error} />);
 });
 
 app.post('/diem', async (c) => {
@@ -66,7 +67,7 @@ app.post('/diem', async (c) => {
     } catch (error) {
         if (error instanceof Error) {
             console.error(error.message);
-            return c.html(<Homepage error={error.message} />);
+            return c.redirect('/?error=' + error.message);
         }
     }
 });

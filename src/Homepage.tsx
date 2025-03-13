@@ -1,4 +1,4 @@
-export const Homepage = ({ error }: { error: any }) => {
+export const Homepage = ({ error }: { error?: any }) => {
     return (
         <html lang="en">
             <head>
