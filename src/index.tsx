@@ -72,4 +72,8 @@ app.post('/diem', async (c) => {
     }
 });
 
+app.get('/*', (c) => {
+    return c.redirect('/');
+});
+
 export default app;
