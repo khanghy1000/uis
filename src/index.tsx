@@ -1,6 +1,13 @@
 import { Hono } from 'hono';
 import { Result } from './Result';
 import { Homepage } from './Homepage';
+import {
+    DsDiemMonHoc,
+    GetDiemResponse,
+    LoginResponse,
+    SinhVienInfo,
+    SinhVienInfoResponse,
+} from './types';
 
 const app = new Hono();
 
@@ -30,7 +37,7 @@ app.post('/diem', async (c) => {
             throw new Error('Login failed');
         }
 
-        const loginData: any = await loginRes.json();
+        const loginData: LoginResponse = await loginRes.json();
         const token = loginData.access_token;
 
         const svInfoRes = await fetch(svInfoUrl, {
@@ -44,7 +51,7 @@ app.post('/diem', async (c) => {
             throw new Error('Get sv info failed');
         }
 
-        const svInfoData: any = await svInfoRes.json();
+        const svInfoData: SinhVienInfoResponse = await svInfoRes.json();
 
         const dsDiemRes = await fetch(getDsDiemUrl, {
             method: 'POST',
@@ -57,7 +64,7 @@ app.post('/diem', async (c) => {
             throw new Error('Get ds diem failed');
         }
 
-        const dsDiemData: any = await dsDiemRes.json();
+        const dsDiemData = (await dsDiemRes.json()) as GetDiemResponse;
         return c.html(
             <Result
                 svInfo={svInfoData.data}

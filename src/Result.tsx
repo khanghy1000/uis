@@ -1,9 +1,11 @@
+import { DsDiemHocky, DsDiemMonHoc, SinhVienInfo } from "./types";
+
 export const Result = ({
     dsDiemHocKy,
     svInfo,
 }: {
-    dsDiemHocKy: any;
-    svInfo: any;
+    dsDiemHocKy: DsDiemHocky[];
+    svInfo: SinhVienInfo;
 }) => {
     return (
         <html>
@@ -26,7 +28,7 @@ export const Result = ({
                 <h3>Họ tên: {svInfo.ten_day_du}</h3>
                 <h3>MSSV: {svInfo.ma_sv}</h3>
                 <hr />
-                {dsDiemHocKy.map((hocKy: any) => (
+                {dsDiemHocKy.map((hocKy) => (
                     <>
                         <h2>{hocKy.ten_hoc_ky}</h2>
                         <table border={1}>
@@ -42,7 +44,7 @@ export const Result = ({
                                 <th>Kết quả</th>
                                 <th>Điểm thành phần</th>
                             </tr>
-                            {hocKy.ds_diem_mon_hoc.map((monHoc: any) =>
+                            {hocKy.ds_diem_mon_hoc.map((monHoc) =>
                                 MonHocRow(monHoc)
                             )}
                         </table>
@@ -54,7 +56,7 @@ export const Result = ({
     );
 };
 
-function MonHocRow(monHoc: any) {
+function MonHocRow(monHoc: DsDiemMonHoc) {
     return (
         <tr>
             <td>{monHoc.ma_mon}</td>
@@ -100,7 +102,7 @@ function MonHocRow(monHoc: any) {
     );
 }
 
-function DiemThanhPhanTable(monHoc: any) {
+function DiemThanhPhanTable(monHoc: DsDiemMonHoc) {
     if (!monHoc.ds_diem_thanh_phan || monHoc.ds_diem_thanh_phan.length === 0) {
         return null;
     }
@@ -115,7 +117,7 @@ function DiemThanhPhanTable(monHoc: any) {
                 </tr>
             </thead>
             <tbody>
-                {monHoc.ds_diem_thanh_phan.map((tp: any) => (
+                {monHoc.ds_diem_thanh_phan.map((tp) => (
                     <tr>
                         <td>{tp.ten_thanh_phan}</td>
                         <td>{tp.trong_so}</td>
@@ -127,7 +129,11 @@ function DiemThanhPhanTable(monHoc: any) {
     );
 }
 
-function DiemTB({ hocKy }: { hocKy: any }) {
+function DiemTB({
+    hocKy,
+}: {
+    hocKy: DsDiemHocky;
+}) {
     return (
         <table border={1} style={{ marginTop: '20px', marginBottom: '20px' }}>
             <tr>
